@@ -27,9 +27,12 @@ from scipy import stats
 from statsmodels.stats.contingency_tables import mcnemar
 from statsmodels.stats.multitest import multipletests
 
+import torch
+
 from config import (
     ROOT, CONDITIONS, CONDITIONS_REAL, CONDITIONS_RANDOM,
     COEFFICIENTS, COLORS, LABELS, TARGET_LAYER,
+    CRITICAL_ROLES, CONFORMIST_ROLES,
     N_RANDOM_VECTORS, MCC_METHOD,
     DEGRAD_RATE_TOL, DEGRAD_LOGIT_TOL,
 )
@@ -655,6 +658,128 @@ for cond in CONDITIONS_REAL + CONDITIONS_RANDOM[:1]:
 # ---- 5. Axis projection analysis ----
 tests["axis_projection_baseline"] = proj_stats_baseline
 tests["axis_projection_pooled"] = proj_stats_pooled
+
+
+# ---- 6. CAA decomposition analysis ----
+decomp_path = f"{ROOT}/vectors/steering/caa_decomposition.json"
+if os.path.exists(decomp_path):
+    print("\n--- CAA Decomposition Analysis ---")
+    with open(decomp_path) as f:
+        decomp = json.load(f)
+
+    tests["caa_decomposition"] = {}
+    for cond_name, d in decomp.items():
+        tests["caa_decomposition"][cond_name] = {
+            "cosine_with_caa": d["cosine_with_caa"],
+            "caa_component_norm": d["caa_component_norm"],
+            "residual_norm": d["residual_norm"],
+        }
+        # Check if decomposed vectors were evaluated
+        comp_key = f"{cond_name}_caa_component"
+        resid_key = f"{cond_name}_residual"
+        for key_label, key_name in [("caa_component", comp_key), ("residual", resid_key)]:
+            # Look for results from ablation run (if user ran 02 with component vectors)
+            best_c_full = best_per_cond.get(cond_name, {}).get("coefficient")
+            if best_c_full:
+                rows_comp = idx.get((key_name, best_c_full), [])
+                if rows_comp:
+                    tests["caa_decomposition"][cond_name][f"{key_label}_logit"] = logit_of(rows_comp)
+                    tests["caa_decomposition"][cond_name][f"{key_label}_rate"] = rate_of(rows_comp)
+
+        print(f"  {cond_name}: cos(CAA)={d['cosine_with_caa']:+.4f}")
+
+    # Efficiency analysis: sycophancy_reduction / |coefficient| vs cosine with CAA
+    print("\n--- Efficiency Analysis ---")
+    tests["efficiency"] = {}
+    for cond in CONDITIONS_REAL:
+        bc = best_per_cond.get(cond)
+        if not bc or bc["coefficient"] == 0:
+            continue
+        reduction = baseline_logit - bc["mean_syc_logit"]
+        magnitude = abs(bc["coefficient"])
+        efficiency = reduction / magnitude if magnitude > 0 else 0
+        cos_caa = decomp.get(cond, {}).get("cosine_with_caa", 0.0) if cond in decomp else 0.0
+        tests["efficiency"][cond] = {
+            "reduction": float(reduction),
+            "magnitude": magnitude,
+            "efficiency": float(efficiency),
+            "cosine_with_caa": float(cos_caa),
+        }
+        print(f"  {cond}: reduction={reduction:+.3f}  efficiency={efficiency:.6f}  cos(CAA)={cos_caa:+.4f}")
+else:
+    print("\n--- CAA decomposition not found (run 02b_extract_caa.py + 01) ---")
+
+
+# ---- 7. PCA persona-space visualization ----
+print("\n--- Figure 6: Persona Space PCA ---")
+try:
+    from sklearn.decomposition import PCA
+
+    # Collect all real steering vectors for PCA
+    vec_names_pca = []
+    vec_data_pca = []
+    for name in cos["names"]:
+        if name.startswith("random_"):
+            if name != "random_0":
+                continue  # only include one random for reference
+        vec_path = f"{ROOT}/vectors/steering/{name}_unit.pt"
+        if os.path.exists(vec_path):
+            v = torch.load(vec_path, map_location="cpu", weights_only=False).float().numpy()
+            vec_names_pca.append(name)
+            vec_data_pca.append(v)
+
+    if len(vec_data_pca) >= 3:
+        vec_matrix = np.stack(vec_data_pca)
+        pca = PCA(n_components=2)
+        coords = pca.fit_transform(vec_matrix)
+
+        fig6, ax = plt.subplots(figsize=(10, 8))
+        for i, name in enumerate(vec_names_pca):
+            color = COLORS.get(name, "#333333")
+            label = LABELS.get(name, name)
+            marker = "o"
+            size = 100
+            if name in CONFORMIST_ROLES:
+                marker = "s"  # square for conformist
+            elif name.startswith("random"):
+                marker = "x"
+                size = 80
+            elif name == "caa":
+                marker = "D"  # diamond for CAA
+                size = 120
+
+            # Annotate with sycophancy reduction if available
+            bc = best_per_cond.get(name)
+            annot = label
+            if bc:
+                annot += f"\n(logit {bc['mean_syc_logit']:+.2f})"
+
+            ax.scatter(coords[i, 0], coords[i, 1], c=color, s=size, marker=marker,
+                       zorder=5, edgecolors="black", linewidth=0.5)
+            ax.annotate(annot, (coords[i, 0], coords[i, 1]),
+                        textcoords="offset points", xytext=(8, 8),
+                        fontsize=8, color=color)
+
+        ax.set_xlabel(f"PC1 ({pca.explained_variance_ratio_[0]*100:.1f}% variance)")
+        ax.set_ylabel(f"PC2 ({pca.explained_variance_ratio_[1]*100:.1f}% variance)")
+        ax.set_title("Fig 6: Persona Space (PCA of steering vectors)\n"
+                      "o = critical roles, s = conformist roles, D = CAA, x = random")
+        ax.grid(True, alpha=0.3)
+        plt.tight_layout()
+        fig6.savefig(f"{FIG_DIR}/fig6_persona_space_pca.png", dpi=150, bbox_inches="tight")
+        plt.close(fig6)
+        print("saved fig6_persona_space_pca.png")
+
+        tests["pca_persona_space"] = {
+            "pc1_variance_ratio": float(pca.explained_variance_ratio_[0]),
+            "pc2_variance_ratio": float(pca.explained_variance_ratio_[1]),
+            "vector_names": vec_names_pca,
+            "coordinates": coords.tolist(),
+        }
+    else:
+        print("  Not enough vectors for PCA (need >= 3)")
+except ImportError:
+    print("  sklearn not available, skipping PCA")
 
 
 # ---- Save tests ----
