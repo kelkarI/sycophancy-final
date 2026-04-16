@@ -75,10 +75,13 @@ def fetch_sycophancy_datasets(out_dir):
 
 
 def fetch_role_vectors(out_dir):
-    """Download the pre-computed gemma-2-27b vectors from HF snapshot."""
+    """Download the pre-computed gemma-2-27b vectors from the HF dataset
+    lu-christina/assistant-axis-vectors (NOT a model repo -- pass
+    repo_type='dataset' to hf_hub_download)."""
     from huggingface_hub import hf_hub_download  # lazy import
 
     repo_id = "lu-christina/assistant-axis-vectors"
+    repo_type = "dataset"
     os.makedirs(out_dir, exist_ok=True)
     role_dir = os.path.join(out_dir, "role_vectors")
     os.makedirs(role_dir, exist_ok=True)
@@ -94,9 +97,10 @@ def fetch_role_vectors(out_dir):
             print(f"  [skip] {hf_path} already at {local_path}")
             continue
         try:
-            src = hf_hub_download(repo_id=repo_id, filename=hf_path)
+            src = hf_hub_download(repo_id=repo_id, filename=hf_path,
+                                  repo_type=repo_type)
         except Exception as e:
-            print(f"  [FAIL] hf_hub_download {repo_id}:{hf_path}: {e}")
+            print(f"  [FAIL] hf_hub_download {repo_type}:{repo_id}:{hf_path}: {e}")
             raise
         # Copy instead of symlink so the experiment directory is self-contained
         with open(src, "rb") as r, open(local_path, "wb") as w:
