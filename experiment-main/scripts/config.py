@@ -48,7 +48,17 @@ CONDITIONS_RANDOM = [f"random_{i}" for i in range(N_RANDOM_VECTORS)]
 CONDITIONS = CONDITIONS_REAL + CONDITIONS_RANDOM
 
 # ---- Coefficient sweep ----
+# Reduced from 13 points to 9 to fit the multi-seed GPU budget while keeping
+# dose-response curves smooth. We dropped {-3000, -200, +200, +3000} since
+# those values lie between neighbouring points that are already sampled
+# and carried little extra information in the pilot runs. The full 13-point
+# sweep is available under COEFFICIENTS_FULL for ablations.
 COEFFICIENTS = [
+    -5000.0, -2000.0, -1000.0, -500.0,
+    0.0,
+    500.0, 1000.0, 2000.0, 5000.0,
+]
+COEFFICIENTS_FULL = [
     -5000.0, -3000.0, -2000.0, -1000.0, -500.0, -200.0,
     0.0,
     200.0, 500.0, 1000.0, 2000.0, 3000.0, 5000.0,

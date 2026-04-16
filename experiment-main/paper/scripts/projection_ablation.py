@@ -28,7 +28,15 @@ from _paper_style import (
 
 
 def main():
-    proj = load_json(f"{RESULTS_DIR}/axis_projections_test.json")
+    # Prefer the dedicated response-capture output (02d_response_capture.py).
+    # Fall back to the main-sweep projections file (which has response_projection
+    # only if 02 was run without --skip-response-gen).
+    import os as _os
+    rp = f"{RESULTS_DIR}/axis_projections_response_test.json"
+    if _os.path.exists(rp):
+        proj = load_json(rp)
+    else:
+        proj = load_json(f"{RESULTS_DIR}/axis_projections_test.json")
     tests = load_json(f"{RESULTS_DIR}/statistical_tests_test.json")
 
     # Row-level pooled comparison on all real-condition rows, excluding the

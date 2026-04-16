@@ -102,6 +102,7 @@ RESPONSE_GEN_TOKENS = 8  # short generation to capture response-token projection
 def eval_condition(
     model, tokenizer, eval_data, condition_name, coefficient,
     steering_vec, capture,
+    skip_response_gen: bool = False,
 ):
     results = []
     device = model.device
@@ -141,35 +142,40 @@ def eval_condition(
         prompt_proj = capture.last_proj
 
         # --- Phase 2: short generation for response-token projections ---
-        capture.mode = "all"
-        capture.all_projs = []
-        if use_steering:
-            with ActivationSteering(
-                model,
-                steering_vectors=[steering_vec],
-                coefficients=[coefficient],
-                layer_indices=[TARGET_LAYER],
-                intervention_type="addition",
-                positions="all",
-            ):
+        # Skipped in the main multi-seed sweep (saves ~6-8x GPU time). Response-token
+        # projections are captured by the auxiliary 02d_response_capture.py script
+        # only at the coefs used in the paper (baseline + each condition's best).
+        mean_response_proj = float("nan")
+        if not skip_response_gen:
+            capture.mode = "all"
+            capture.all_projs = []
+            if use_steering:
+                with ActivationSteering(
+                    model,
+                    steering_vectors=[steering_vec],
+                    coefficients=[coefficient],
+                    layer_indices=[TARGET_LAYER],
+                    intervention_type="addition",
+                    positions="all",
+                ):
+                    model.generate(
+                        **inputs, max_new_tokens=RESPONSE_GEN_TOKENS,
+                        do_sample=False,
+                    )
+            else:
                 model.generate(
                     **inputs, max_new_tokens=RESPONSE_GEN_TOKENS,
                     do_sample=False,
                 )
-        else:
-            model.generate(
-                **inputs, max_new_tokens=RESPONSE_GEN_TOKENS,
-                do_sample=False,
-            )
-        # The first few entries in all_projs are from the prefill pass (prompt tokens);
-        # subsequent entries are the response tokens (one per generate step).
-        # During generate, each step calls the forward hook once for just the new token.
-        # The prefill step produces projections for all prompt tokens at once, but our
-        # hook only captures the last position. So all_projs has:
-        #   [prefill_last_pos, gen_tok_1, gen_tok_2, ..., gen_tok_N]
-        # We want the mean of the generated-token projections (indices 1+).
-        response_projs = capture.all_projs[1:] if len(capture.all_projs) > 1 else capture.all_projs
-        mean_response_proj = float(st.mean(response_projs)) if response_projs else float("nan")
+            # The first few entries in all_projs are from the prefill pass (prompt tokens);
+            # subsequent entries are the response tokens (one per generate step).
+            # During generate, each step calls the forward hook once for just the new token.
+            # The prefill step produces projections for all prompt tokens at once, but our
+            # hook only captures the last position. So all_projs has:
+            #   [prefill_last_pos, gen_tok_1, gen_tok_2, ..., gen_tok_N]
+            # We want the mean of the generated-token projections (indices 1+).
+            response_projs = capture.all_projs[1:] if len(capture.all_projs) > 1 else capture.all_projs
+            mean_response_proj = float(st.mean(response_projs)) if response_projs else float("nan")
 
         results.append(
             {
@@ -213,6 +219,12 @@ def main():
     parser.add_argument("--split", choices=["tune", "test", "all"], default="all",
                         help="which split to evaluate: tune (for coefficient selection), "
                              "test (for final reporting), or all (legacy mode)")
+    parser.add_argument("--skip-response-gen", action="store_true",
+                        help="Skip the 8-token greedy generation used to capture "
+                             "response-token axis projection. ~6-8x faster. "
+                             "response_projection is stored as NaN. Capture separately "
+                             "via 02d_response_capture.py for the projection-ablation "
+                             "analysis.")
     args = parser.parse_args()
 
     # --- Load & validate eval data ---
@@ -290,6 +302,7 @@ def main():
             model, tokenizer, eval_data,
             condition_name="baseline", coefficient=0.0,
             steering_vec=axis_unit, capture=capture,
+            skip_response_gen=args.skip_response_gen,
         )
         dt = time.time() - t0
         s = summarize(baseline)
@@ -336,6 +349,7 @@ def main():
                 model, tokenizer, eval_data,
                 condition_name=cond, coefficient=coeff,
                 steering_vec=vecs[cond], capture=capture,
+                skip_response_gen=args.skip_response_gen,
             )
             dt = time.time() - t0
             s = summarize(rows)

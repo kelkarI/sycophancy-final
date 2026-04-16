@@ -54,6 +54,12 @@ def main():
              "so the test-split selection is NOT re-run on held-out data. "
              "Required for publication-grade tune/test hygiene.",
     )
+    parser.add_argument("--skip-response-gen", action="store_true",
+                        help="Forward --skip-response-gen to 02_evaluate_steering.py. "
+                             "Required to keep the multi-seed sweep within the "
+                             "~30 H100-hour budget. Response-token projections are "
+                             "captured separately by 02d_response_capture.py at best "
+                             "coefs only.")
     args = parser.parse_args()
 
     seeds = args.seeds
@@ -80,6 +86,8 @@ def main():
             eval_cmd = [sys.executable, "02_evaluate_steering.py"]
             if args.split != "all":
                 eval_cmd += ["--split", args.split]
+            if args.skip_response_gen:
+                eval_cmd += ["--skip-response-gen"]
             run_cmd(eval_cmd, f"Evaluating (seed={seed}, split={args.split})")
 
         # 3. Run analysis
