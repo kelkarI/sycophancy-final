@@ -1,9 +1,108 @@
 # General Persona Directions Reduce Sycophancy via Activation Steering
 
-We show that general-purpose persona directions -- extracted from open-ended
-role-playing, not from sycophancy data -- reduce sycophantic behavior in
-**Gemma 2 27B Instruct**, and we decompose why this works geometrically and
-mechanistically.
+## Abstract
+
+We study whether **general persona directions** extracted from open-ended
+role-playing (skeptic, devil's advocate, scientist, judge, contrarian, plus
+four conformist roles) can steer a model away from sycophancy as effectively
+as a **targeted Contrastive Activation Addition** (CAA, Rimsky et al. 2024)
+vector trained on sycophancy-specific data, in Gemma 2 27B Instruct. We
+report three findings on the philpapers2020 sycophancy benchmark with a
+tune/test split, multi-seed robustness, and Holm-Bonferroni correction:
+
+1. **Role directions move sycophancy bidirectionally.** Steering toward
+   critical roles reduces sycophancy; steering toward conformist roles
+   (`servant`, `diplomat`, `disciple`, `peacemaker`) produces the symmetric
+   *increase*. The effect is not a noise artifact of adding any unit vector
+   to layer 22: 10 random controls define a null band whose width does not
+   overlap with the real-condition effect at tune-locked best coefficients.
+2. **A general persona direction matches a targeted CAA vector.** At
+   matched operating points on the held-out test split, the best critical
+   role direction is within a small margin of CAA on Δlogit and close in
+   efficiency per unit steering magnitude. Training data for the two is
+   disjoint (verified by hash-overlap receipt).
+3. **The *direction* carries the effect, not the magnitude that happens
+   to align with CAA.** Decomposing each role into its CAA-aligned
+   component and its residual, and steering with each at the role's best
+   coefficient with both pieces **unit-normalised**, reveals per-role
+   which of the two carries the behavioural reduction. Some roles are
+   dominated by their CAA-aligned component; others retain most of the
+   effect in their residual, indicating an independent mechanism.
+
+See `paper/RESULTS.md` for the full walk-through with file-traced numbers,
+`paper/METHODS.md` for model and statistical detail, and
+`paper/LIMITATIONS.md` for caveats.
+
+---
+
+## References and external dependencies
+
+| Resource | Purpose | Link |
+|---|---|---|
+| `google/gemma-2-27b-it` | Model under study (gated, accept the Gemma license on HF). | https://huggingface.co/google/gemma-2-27b-it |
+| `safety-research/assistant-axis` | `ActivationSteering` context manager used to apply steering hooks. | https://github.com/safety-research/assistant-axis |
+| `lu-christina/assistant-axis-vectors` | Pre-computed `assistant_axis.pt`, `default_vector.pt`, and per-role residual means for Gemma 2 27B. Downloaded by `scripts/fetch_external.py`. | https://huggingface.co/lu-christina/assistant-axis-vectors |
+| `anthropics/evals` (GitHub) | Sycophancy A/B evaluations: `sycophancy_on_philpapers2020.jsonl` (our held-out eval), `sycophancy_on_nlp_survey.jsonl` and `sycophancy_on_political_typology_quiz.jsonl` (our CAA training set). We pin immutable blob SHAs. | https://github.com/anthropics/evals/tree/main/sycophancy |
+| Rimsky et al. 2024 | CAA method. | https://arxiv.org/abs/2312.06681 |
+| Perez et al. 2023 | Model-Written Evaluations (source of the philpapers2020 A/B preferences). | https://arxiv.org/abs/2212.09251 |
+
+---
+
+## Reproducibility — exact commands on a single H100
+
+All commands run from `/home/ubuntu/experiment/scripts/`. Approximate
+runtimes are for an H100 80GB with the model already cached. See
+`PIPELINE_MAP.md` for the full per-step runtime breakdown and
+`paper/scripts/build_all.py` for a single-command rebuild of every paper
+artefact.
+
+```bash
+# ---- setup ----
+python fetch_external.py                       # <5 min; downloads vectors + datasets
+python 00_setup.py                             # ~10 min; loads model, sanity checks
+python 00b_rebuild_eval.py                     # <10 s; counterbalanced eval_data.json
+
+# ---- vectors ----
+python 02b_extract_caa.py                      # ~30 min; CAA vector
+python 01_prepare_steering_vectors.py          # <5 s;  decomposition + cosine matrix
+
+# ---- tune split (multi-seed) ----
+python run_multiseed.py --seeds 42 7 123 456 789 --split tune
+# ~20 h on H100 for all 5 seeds; saves per-seed results under results/seed_*/
+
+# ---- aggregate tune best coefs ----
+python ../paper/scripts/aggregate_multiseed.py --split tune
+
+# ---- test split (multi-seed, locked coefs) ----
+# Note: run_multiseed.py re-runs 02_evaluate_steering.py per seed; the
+# tune-split locked coefs are read by 03_analysis.py, which run_multiseed
+# invokes. For the multi-seed test runs, we pass the tune aggregate as
+# the lock source in 03_analysis --locked-coefs-from.
+python run_multiseed.py --seeds 42 7 123 --split test
+python ../paper/scripts/aggregate_multiseed.py --split test
+
+# ---- decomposition (single run, tune-locked) ----
+python 02c_evaluate_decomposition.py \
+    --split test \
+    --locked-coefs-from ../results/best_coefs_tune.json
+# ~40 min on H100
+
+# ---- overcorrection ----
+python over_correction_check.py \
+    --split test \
+    --locked-coefs-from ../results/best_coefs_tune.json
+# ~1 h on H100
+
+# ---- paper artefacts (CPU only) ----
+python ../paper/scripts/build_all.py
+# Writes paper/figures/*.{pdf,png} at 300 DPI and paper/tables/*.{csv,tex}
+```
+
+Total GPU budget: **~26–34 H100 hours**, approximately **$65–85** at
+Lambda on-demand H100 rates.
+
+Trace paths: every numerical claim in `paper/RESULTS.md` cites the exact
+`results/*.json` or `paper/tables/*.csv` file it is drawn from.
 
 ---
 
