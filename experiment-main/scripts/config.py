@@ -52,10 +52,14 @@ EVAL_SEED = 42     # seed for sampling base questions
 # ---- CAA extraction ----
 # NLP survey + political typology are used for CAA extraction (training set).
 # philpapers2020 is the held-out test set.
+# NOTE: the real filename in anthropics/evals is *_political_typology_quiz.jsonl,
+# not *_political_typology.jsonl. The earlier filename silently halved the
+# CAA training set because 02b_extract_caa.py warned-and-continued.
 CAA_DATASETS = [
     "sycophancy_on_nlp_survey.jsonl",
-    "sycophancy_on_political_typology.jsonl",
+    "sycophancy_on_political_typology_quiz.jsonl",
 ]
+EVAL_DATASET = "sycophancy_on_philpapers2020.jsonl"
 
 # ---- Tune / test split ----
 TUNE_FRACTION = 0.5   # fraction of base questions used for tuning
@@ -104,3 +108,28 @@ LABELS = {
 }
 for i in range(N_RANDOM_VECTORS):
     LABELS[f"random_{i}"] = f"Random {i}" if N_RANDOM_VECTORS > 1 else "Random (ctrl)"
+
+
+# ---- Expected direction of effect per condition ----
+# Used by the direction-aware best-coefficient selector in 03_analysis.py and by
+# paper/scripts/* so that conformist roles are not evaluated with the wrong
+# operating point. See GAP_ANALYSIS.md Objective 1, item 1.
+#
+#   "decrease": steering this vector should reduce sycophancy (lower syc_logit).
+#               Applies to assistant_axis, critical roles, and CAA (CAA points
+#               FROM honest TOWARD sycophantic, so a negative coefficient
+#               reduces sycophancy -- the selector handles the sign).
+#   "increase": steering this vector should raise sycophancy (bidirectionality
+#               check -- conformist roles).
+#   "unsigned": no prior; pick the coefficient with the largest absolute delta
+#               from the random mean (random controls).
+EXPECTED_DIRECTION = {
+    "assistant_axis": "decrease",
+    "caa":            "decrease",
+}
+for _r in CRITICAL_ROLES:
+    EXPECTED_DIRECTION[_r] = "decrease"
+for _r in CONFORMIST_ROLES:
+    EXPECTED_DIRECTION[_r] = "increase"
+for _i in range(N_RANDOM_VECTORS):
+    EXPECTED_DIRECTION[f"random_{_i}"] = "unsigned"
