@@ -128,6 +128,36 @@ def main():
         json.dump(out, f, indent=2)
     print(f"\nWrote {out_path}")
 
+    # On tune-split aggregate, write a consensus best_coefs file that the
+    # multi-seed test runs can lock on. Consensus rule: median coefficient
+    # per condition across seeds. If the median lies between sweep points,
+    # round toward the coef that appears more often; break ties toward the
+    # one with the best mean excess over random.
+    if args.split == "tune":
+        import statistics as _st
+        consensus = {}
+        for cond, d in out["per_condition"].items():
+            cs = d.get("best_coefs", [])
+            if not cs:
+                continue
+            # Pick the mode first; if no unique mode, pick the median and
+            # snap to the nearest coefficient that actually appears in cs.
+            try:
+                m = _st.mode(cs)
+            except _st.StatisticsError:
+                med = _st.median(cs)
+                m = min(cs, key=lambda c: (abs(c - med), -cs.count(c)))
+            consensus[cond] = float(m)
+        consensus_path = f"{res_dir}/best_coefs_tune_aggregate.json"
+        with open(consensus_path, "w") as f:
+            json.dump({
+                "source_split": "tune",
+                "seeds": seeds,
+                "rule": "mode across seeds, tie-break by count then proximity to median",
+                "best_coefs": consensus,
+            }, f, indent=2)
+        print(f"Wrote {consensus_path}  (use as --locked-coefs-from for test runs)")
+
 
 if __name__ == "__main__":
     main()

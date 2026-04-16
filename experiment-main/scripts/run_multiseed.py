@@ -47,6 +47,13 @@ def main():
                         help="Which split to run (default: all)")
     parser.add_argument("--skip-eval", action="store_true",
                         help="Skip 02_evaluate_steering.py (assume results exist)")
+    parser.add_argument(
+        "--locked-coefs-from", default=None,
+        help="Path to best_coefs_tune.json (typically the aggregated one). "
+             "When set and --split test, passes this through to 03_analysis.py "
+             "so the test-split selection is NOT re-run on held-out data. "
+             "Required for publication-grade tune/test hygiene.",
+    )
     args = parser.parse_args()
 
     seeds = args.seeds
@@ -80,11 +87,17 @@ def main():
         analysis_cmd = [sys.executable, "03_analysis.py"]
         if args.split != "all":
             analysis_cmd += ["--split", args.split]
+        if args.locked_coefs_from and args.split == "test":
+            analysis_cmd += ["--locked-coefs-from", args.locked_coefs_from]
         run_cmd(analysis_cmd, f"Analyzing (seed={seed}, split={args.split})")
 
-        # 4. Copy results to seed-specific directory
-        for fname in [f"summary{suffix}.txt", f"statistical_tests{suffix}.json",
-                      f"sycophancy_rates{suffix}.json"]:
+        # 4. Copy results to seed-specific directory (include best_coefs so
+        #    aggregate_multiseed.py can build the consensus picks).
+        for fname in [f"summary{suffix}.txt",
+                      f"statistical_tests{suffix}.json",
+                      f"sycophancy_rates{suffix}.json",
+                      f"best_coefs{suffix}.json",
+                      f"degradation_flags{suffix}.json"]:
             src = f"{ROOT}/results/{fname}"
             dst = f"{seed_dir}/{fname}"
             if os.path.exists(src):
