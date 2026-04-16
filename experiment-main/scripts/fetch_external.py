@@ -92,6 +92,7 @@ def fetch_role_vectors(out_dir):
         required.append((f"gemma-2-27b/role_vectors/{role}.pt",
                          os.path.join(role_dir, f"{role}.pt")))
 
+    missing = []
     for hf_path, local_path in required:
         if os.path.exists(local_path) and os.path.getsize(local_path) > 1000:
             print(f"  [skip] {hf_path} already at {local_path}")
@@ -100,12 +101,18 @@ def fetch_role_vectors(out_dir):
             src = hf_hub_download(repo_id=repo_id, filename=hf_path,
                                   repo_type=repo_type)
         except Exception as e:
-            print(f"  [FAIL] hf_hub_download {repo_type}:{repo_id}:{hf_path}: {e}")
-            raise
-        # Copy instead of symlink so the experiment directory is self-contained
+            print(f"  [MISS] {hf_path}: {type(e).__name__} (will continue; "
+                  "see summary)")
+            missing.append(hf_path)
+            continue
         with open(src, "rb") as r, open(local_path, "wb") as w:
             w.write(r.read())
         print(f"  [ok]   {hf_path} -> {local_path}")
+    if missing:
+        print(f"\n  NOTE: {len(missing)} file(s) not found in "
+              f"{repo_type}:{repo_id}. These are printed above. The main "
+              "pipeline will error on any condition whose vector is missing "
+              "unless the vectors are provided by another means.")
 
 
 def main():

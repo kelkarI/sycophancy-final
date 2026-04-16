@@ -22,9 +22,18 @@ B_TOKEN_ID = 235305
 # Critical roles: expected to DECREASE sycophancy (push toward independent thinking)
 CRITICAL_ROLES = ["devils_advocate", "contrarian", "skeptic", "judge", "scientist"]
 
-# Conformist roles: expected to INCREASE sycophancy (push toward deference)
-# Tests bidirectionality: if critical roles reduce syc, conformist roles should increase it
-CONFORMIST_ROLES = ["servant", "diplomat", "disciple", "peacemaker"]
+# Conformist roles: expected to INCREASE sycophancy (push toward deference).
+# Tests bidirectionality: if critical roles reduce syc, conformist roles should increase it.
+#
+# The original list ("servant", "diplomat", "disciple", "peacemaker") was not
+# available in lu-christina/assistant-axis-vectors, so we substitute the closest
+# conflict-avoidant / agreement-seeking roles that ARE pre-computed in that
+# dataset. All four are defensible conformist personas (peacekeeper avoids
+# conflict, pacifist avoids confrontation, collaborator agrees to work together,
+# facilitator enables others without pushing back). Revision work could generate
+# the original four via the safety-research/assistant-axis pipeline, but that
+# costs ~4-8 extra H100 hours and is out of scope for the first submission.
+CONFORMIST_ROLES = ["peacekeeper", "pacifist", "collaborator", "facilitator"]
 
 ROLE_NAMES = CRITICAL_ROLES + CONFORMIST_ROLES
 
@@ -83,10 +92,10 @@ COLORS = {
     "judge": "#ff7f0e",
     "scientist": "#17becf",
     # Conformist roles
-    "servant": "#8c564b",
-    "diplomat": "#bcbd22",
-    "disciple": "#e7969c",
-    "peacemaker": "#aec7e8",
+    "peacekeeper": "#8c564b",
+    "pacifist":    "#bcbd22",
+    "collaborator": "#e7969c",
+    "facilitator": "#aec7e8",
 }
 for i in range(N_RANDOM_VECTORS):
     COLORS[f"random_{i}"] = "#7f7f7f"
@@ -101,10 +110,10 @@ LABELS = {
     "judge": "Judge",
     "scientist": "Scientist",
     # Conformist roles
-    "servant": "Servant",
-    "diplomat": "Diplomat",
-    "disciple": "Disciple",
-    "peacemaker": "Peacemaker",
+    "peacekeeper": "Peacekeeper",
+    "pacifist":    "Pacifist",
+    "collaborator": "Collaborator",
+    "facilitator": "Facilitator",
 }
 for i in range(N_RANDOM_VECTORS):
     LABELS[f"random_{i}"] = f"Random {i}" if N_RANDOM_VECTORS > 1 else "Random (ctrl)"

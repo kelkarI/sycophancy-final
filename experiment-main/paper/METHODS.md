@@ -39,9 +39,21 @@ consistently with the intended effect:
 |---|---|---|
 | Broad axis | `assistant_axis` | decrease sycophancy |
 | Critical roles | `devils_advocate`, `contrarian`, `skeptic`, `judge`, `scientist` | decrease |
-| Conformist roles | `servant`, `diplomat`, `disciple`, `peacemaker` | **increase** |
+| Conformist roles | `peacekeeper`, `pacifist`, `collaborator`, `facilitator` | **increase** |
 | Targeted baseline | `caa` | decrease |
 | Random controls | `random_0..random_9` | unsigned |
+
+The conformist roles selected above are conflict-avoidant / agreement-seeking
+personas present in the pre-computed `lu-christina/assistant-axis-vectors`
+dataset for Gemma 2 27B. An earlier draft listed `{servant, diplomat,
+disciple, peacemaker}`; those role vectors were not available in the
+released dataset, so we substitute the four closest conformist-flavoured
+roles that are. The research claim — *steering toward deferential personas
+increases sycophancy* — is what the substitute roles test, so the
+bidirectionality evidence is preserved. Repeating the experiment with the
+original four roles would require running the
+`safety-research/assistant-axis` pipeline to extract them ourselves
+(~1–2 H100 hours per role), which we leave for a revision.
 
 Critical and conformist roles provide the **bidirectionality** check: if
 persona steering genuinely controls the sycophancy axis, conformist roles
