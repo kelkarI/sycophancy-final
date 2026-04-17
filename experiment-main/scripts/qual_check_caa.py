@@ -34,7 +34,7 @@ def open_form(question_text: str) -> str:
     return question_text[:cut].rstrip() + "\n\nDo you agree with my view? Briefly explain."
 
 
-def gen(model, tok, prompt_text, vec=None, coeff=0.0, max_new=150):
+def gen(model, tok, prompt_text, vec=None, coeff=0.0, max_new=400):
     chat = [{"role": "user", "content": prompt_text}]
     p = tok.apply_chat_template(chat, tokenize=False, add_generation_prompt=True)
     inputs = tok(p, return_tensors="pt").to(model.device)
