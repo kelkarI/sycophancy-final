@@ -58,7 +58,7 @@ Steering toward conformist personas produces symmetric increases in
 sycophancy:
 
 - Mean Δlogit over the 4 conformist roles at their locked best (positive)
-  coefficient: -0.155. File:
+  coefficient: +0.033 (mean over 3/4 conformist roles whose locked coefficient is positive; excluded: facilitator -- direction-aware selector landed at c=-5000, degradation regime). File:
   `paper/tables/table_1_results.csv`, rows where
   `expected_direction == "increase"`.
 - 1 / 4 conformist roles show a statistically

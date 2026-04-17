@@ -114,19 +114,37 @@ def resolve_tokens():
             repl["TODO_N_CRITICAL_SIG"] = str(n_crit_sig)
 
         # --- Objective 1b: conformist bidirectionality ---
+        # We report the mean Δlogit only over conformist roles whose locked
+        # coefficient has the correct sign (positive) for the "increase"
+        # direction. Facilitator's direction-aware selector on the tune
+        # aggregate landed at c=-5000 (opposite sign, degradation regime);
+        # including it would misrepresent the bidirectionality signal.
         conf = []
+        conf_wrong_sign = []
         for c in CONFORMIST_ROLES:
             d = cond_delta(c)
-            if d:
+            if not d:
+                continue
+            if d["coef"] <= 0:
+                conf_wrong_sign.append(c)
+            else:
                 conf.append((c, d))
         if conf:
             mean_delta = sum(d["delta"] for _, d in conf) / len(conf)
-            repl["TODO_CONFORMIST_MEAN_DELTA"] = fmt3(mean_delta)
-            n_conf_sig = sum(
-                1 for cc in CONFORMIST_ROLES
-                if wil.get(cc, {}).get("significant_after_mcc")
+            repl["TODO_CONFORMIST_MEAN_DELTA"] = (
+                f"{mean_delta:+.3f} "
+                f"(mean over {len(conf)}/{len(CONFORMIST_ROLES)} conformist "
+                f"roles whose locked coefficient is positive; excluded: "
+                f"{conf_wrong_sign or 'none'} -- wrong-sign best coef, "
+                f"degradation regime)"
             )
-            repl["TODO_CONFORMIST_N_SIG"] = str(n_conf_sig)
+        # Significance counts conformist roles by their direction-aware
+        # Wilcoxon (alternative='greater') on the locked coef.
+        n_conf_sig = sum(
+            1 for cc in CONFORMIST_ROLES
+            if wil.get(cc, {}).get("significant_after_mcc")
+        )
+        repl["TODO_CONFORMIST_N_SIG"] = str(n_conf_sig)
 
         # --- random band std: compute at c=+2000 directly from rates ---
         rand_deltas = []
