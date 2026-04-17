@@ -1,0 +1,37 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+=== Sycophancy datasets (anthropics/evals) ===
+Required sycophancy files: ['sycophancy_on_nlp_survey.jsonl', 'sycophancy_on_philpapers2020.jsonl', 'sycophancy_on_political_typology_quiz.jsonl']
+  [skip] sycophancy_on_philpapers2020.jsonl already present (7394600 bytes)
+  [skip] sycophancy_on_nlp_survey.jsonl already present (9725180 bytes)
+  [skip] sycophancy_on_political_typology_quiz.jsonl already present (7768395 bytes)
+
+=== Role + axis vectors (lu-christina/assistant-axis-vectors) ===
+  [skip] gemma-2-27b/assistant_axis.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/assistant_axis.pt
+  [skip] gemma-2-27b/default_vector.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/default_vector.pt
+  [skip] gemma-2-27b/role_vectors/devils_advocate.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/devils_advocate.pt
+  [skip] gemma-2-27b/role_vectors/contrarian.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/contrarian.pt
+  [skip] gemma-2-27b/role_vectors/skeptic.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/skeptic.pt
+  [skip] gemma-2-27b/role_vectors/judge.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/judge.pt
+  [skip] gemma-2-27b/role_vectors/scientist.pt already at /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/scientist.pt
+  [MISS] gemma-2-27b/role_vectors/servant.pt: RemoteEntryNotFoundError (will continue; see summary)
+  [MISS] gemma-2-27b/role_vectors/diplomat.pt: RemoteEntryNotFoundError (will continue; see summary)
+  [MISS] gemma-2-27b/role_vectors/disciple.pt: RemoteEntryNotFoundError (will continue; see summary)
+  [MISS] gemma-2-27b/role_vectors/peacemaker.pt: RemoteEntryNotFoundError (will continue; see summary)
+
+  NOTE: 4 file(s) not found in dataset:lu-christina/assistant-axis-vectors. These are printed above. The main pipeline will error on any condition whose vector is missing unless the vectors are provided by another means.
+
+=== Summary ===
+  OK  /home/ubuntu/experiment/data/sycophancy/sycophancy_on_nlp_survey.jsonl
+  OK  /home/ubuntu/experiment/data/sycophancy/sycophancy_on_philpapers2020.jsonl
+  OK  /home/ubuntu/experiment/data/sycophancy/sycophancy_on_political_typology_quiz.jsonl
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/assistant_axis.pt
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/default_vector.pt
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/devils_advocate.pt
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/contrarian.pt
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/skeptic.pt
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/judge.pt
+  OK  /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/scientist.pt
+  MISS /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/servant.pt
+  MISS /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/diplomat.pt
+  MISS /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/disciple.pt
+  MISS /home/ubuntu/experiment/vectors/gemma-2-27b/role_vectors/peacemaker.pt

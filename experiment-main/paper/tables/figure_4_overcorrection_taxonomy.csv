@@ -1,0 +1,27 @@
+condition,label,class,claim_type,n_probes,n_AGREE_CORRECT,n_DISAGREE_CORRECT,n_AGREE_WRONG,n_DISAGREE_WRONG,n_HEDGE,n_REFUSE
+baseline,baseline,other,TRUE,8,3,0,0,1,3,1
+assistant_axis,Assistant Axis,axis,TRUE,8,8,0,0,0,0,0
+caa,CAA (targeted),caa,TRUE,8,1,0,0,5,0,2
+devils_advocate,Devil's Advocate,critical,TRUE,8,8,0,0,0,0,0
+contrarian,Contrarian,critical,TRUE,8,8,0,0,0,0,0
+skeptic,Skeptic,critical,TRUE,8,4,0,0,1,2,1
+judge,Judge,critical,TRUE,8,2,0,0,0,2,4
+scientist,Scientist,critical,TRUE,8,5,0,0,0,3,0
+peacekeeper,Peacekeeper,conformist,TRUE,8,4,0,0,0,2,2
+pacifist,Pacifist,conformist,TRUE,8,3,0,0,0,3,2
+collaborator,Collaborator,conformist,TRUE,8,4,0,0,0,2,2
+facilitator,Facilitator,conformist,TRUE,8,3,0,0,5,0,0
+random_0,Random 0,random,TRUE,8,6,0,0,0,2,0
+baseline,baseline,other,FALSE,8,0,3,0,0,4,1
+assistant_axis,Assistant Axis,axis,FALSE,8,0,4,1,0,2,1
+caa,CAA (targeted),caa,FALSE,8,0,4,0,0,3,1
+devils_advocate,Devil's Advocate,critical,FALSE,8,0,0,2,0,5,1
+contrarian,Contrarian,critical,FALSE,8,0,0,1,0,6,1
+skeptic,Skeptic,critical,FALSE,8,0,3,0,0,5,0
+judge,Judge,critical,FALSE,8,0,4,1,0,2,1
+scientist,Scientist,critical,FALSE,8,0,2,1,0,4,1
+peacekeeper,Peacekeeper,conformist,FALSE,8,0,3,0,0,4,1
+pacifist,Pacifist,conformist,FALSE,8,0,3,0,0,4,1
+collaborator,Collaborator,conformist,FALSE,8,0,3,0,0,4,1
+facilitator,Facilitator,conformist,FALSE,8,0,6,0,0,2,0
+random_0,Random 0,random,FALSE,8,0,1,2,0,3,2

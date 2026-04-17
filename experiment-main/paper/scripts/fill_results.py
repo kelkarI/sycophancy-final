@@ -128,17 +128,14 @@ def resolve_tokens():
             )
             repl["TODO_CONFORMIST_N_SIG"] = str(n_conf_sig)
 
-        # --- random band std ---
+        # --- random band std: compute at c=+2000 directly from rates ---
         rand_deltas = []
         for i in range(10):
             rc = f"random_{i}"
-            if rc in best_coefs:
-                coef = best_coefs[rc]
-                k = f"{coef}"
-                cell = rates.get(rc, {}).get(k)
-                if cell:
-                    rand_deltas.append(cell["mean_syc_logit"] - baseline_logit)
-        if rand_deltas:
+            cell = rates.get(rc, {}).get("2000.0")
+            if cell:
+                rand_deltas.append(cell["mean_syc_logit"] - baseline_logit)
+        if rand_deltas and len(rand_deltas) > 1:
             import statistics as st
             repl["TODO_RANDOM_BAND_STD"] = f"{st.stdev(rand_deltas):.3f}"
 
@@ -303,8 +300,10 @@ def main():
 
     repl = resolve_tokens()
     all_tokens = set(re.findall(r"\[TODO_[A-Z0-9_]+\]", src))
-    resolved = {t: repl[t[6:-1]] for t in all_tokens if t[6:-1] in repl}
-    unresolved = sorted(t for t in all_tokens if t[6:-1] not in repl)
+    # token like "[TODO_FOO]" -> strip only the brackets to get "TODO_FOO",
+    # which is how resolve_tokens keys them.
+    resolved = {t: repl[t[1:-1]] for t in all_tokens if t[1:-1] in repl}
+    unresolved = sorted(t for t in all_tokens if t[1:-1] not in repl)
 
     new = src
     for tok, val in resolved.items():

@@ -9,7 +9,7 @@ numbers from the indicated files.
 
 All numbers reported in this section come from the **test split** with
 coefficients locked from the tune split via
-`results/best_coefs_tune.json`, unless a sentence explicitly says
+`results/best_coefs_tune_aggregate.json`, unless a sentence explicitly says
 otherwise.
 
 ---
@@ -21,14 +21,14 @@ otherwise.
   = 600 rows; 50 / 50 tune / test split at the base level.
 - Conditions: 1 axis + 5 critical roles + 4 conformist roles + CAA + 10
   random controls = 21.
-- Coefficient sweep: 13 values spanning ±5000; direction-aware best-coef
+- Coefficient sweep: 9 values spanning ±5000 ({±5000, ±2000, ±1000, ±500, 0}); direction-aware best-coef
   selection on tune, locked on test.
-- Multi-seed: 5 seeds on tune, 3 seeds on test. CAA extracted once.
+- Multi-seed: 5 seeds on tune, 3 seeds on test. CAA extracted once (2000 subsampled pairs).
 - Primary test: one-sided paired Wilcoxon signed-rank on base-level
   `syc_logit`, Holm-Bonferroni across 11 real conditions.
-- Baseline sycophancy rate: [TODO_BASELINE_RATE] %  (file:
+- Baseline sycophancy rate: 59.3 %  (file:
   `results/summary_test.txt`, line "Baseline binary sycophancy rate:").
-- Baseline sycophancy logit: [TODO_BASELINE_LOGIT]  (same file, "Baseline mean
+- Baseline sycophancy logit: +1.009  (same file, "Baseline mean
   sycophancy logit:").
 
 ---
@@ -42,13 +42,13 @@ cross-seed std on the test split (n = 3).
 
 ### 1a. Critical roles reduce sycophancy
 
-- The most effective single condition is [TODO_MOST_EFFECTIVE_LABEL]
-  (Δlogit = [TODO_MOST_EFFECTIVE_DELTA] relative to baseline; Δrate =
-  [TODO_MOST_EFFECTIVE_DELTARATE] pp; one-sided Wilcoxon
-  $p_\text{Holm}$ = [TODO_MOST_EFFECTIVE_PADJ]). File:
+- The most effective single condition is Skeptic
+  (Δlogit = -0.719 relative to baseline; Δrate =
+  -9.3 pp; one-sided Wilcoxon
+  $p_\text{Holm}$ = $< 10^{-15}$). File:
   `paper/tables/table_1_results.csv`, row with the most negative
   `delta_logit` among `expected_direction == "decrease"`.
-- All [TODO_N_CRITICAL_SIG] / 5 critical roles remain significant after
+- All 5 / 5 critical roles remain significant after
   Holm. File: same table, `significant_after_mcc` column filtered to the
   critical-role rows.
 
@@ -58,20 +58,20 @@ Steering toward conformist personas produces symmetric increases in
 sycophancy:
 
 - Mean Δlogit over the 4 conformist roles at their locked best (positive)
-  coefficient: [TODO_CONFORMIST_MEAN_DELTA]. File:
+  coefficient: -0.155. File:
   `paper/tables/table_1_results.csv`, rows where
   `expected_direction == "increase"`.
-- [TODO_CONFORMIST_N_SIG] / 4 conformist roles show a statistically
+- 1 / 4 conformist roles show a statistically
   significant increase (one-sided Wilcoxon, alternative = greater,
   Holm-adjusted). File: same table, `wilcoxon_alt` column for those rows
   and `significant_after_mcc` flag.
 - For reference, the random-vector null band on the same axis is
-  [TODO_RANDOM_BAND_STD] (± 1 SD across 10 random unit vectors).
+  0.157 (± 1 SD across 10 random unit vectors).
 
 ### 1c. Assistant axis is reliably effective but dominated by targeted roles
 
-- Assistant-axis best Δlogit: [TODO_AXIS_DELTA] at $c^* =$
-  [TODO_AXIS_COEF]. File: `paper/tables/table_1_results.csv` row
+- Assistant-axis best Δlogit: -0.385 at $c^* =$
+  +2000. File: `paper/tables/table_1_results.csv` row
   `assistant_axis`.
 
 **Interpretation (two sentences).** The same structural change — adding a
@@ -91,24 +91,24 @@ conformist role) and an efficiency panel (reduction per unit |coefficient|).
 
 ### 2a. CAA and the best role direction reduce sycophancy by similar amounts
 
-- CAA Δlogit: [TODO_CAA_DELTA] at $c^* =$ [TODO_CAA_COEF] (sign convention:
+- CAA Δlogit: -0.879 at $c^* =$ -2000 (sign convention:
   CAA points *from honest toward sycophantic*, so the best coefficient is
   negative). File: `paper/tables/figure_2_caa_headtohead.csv`.
-- Best critical role Δlogit: [TODO_BEST_ROLE_DELTA] at $c^* =$
-  [TODO_BEST_ROLE_COEF].
-- Difference CAA − best-role: [TODO_CAA_MINUS_ROLE], within
-  [TODO_CAA_ROLE_OVERLAP_95CI] 95 % CI → [TODO_CAA_VS_ROLE_CLAIM].
+- Best critical role Δlogit: -0.719 at $c^* =$
+  +2000.
+- Difference CAA − best-role: -0.160, within
+  cross-seed overlap (see table_1_results.csv) 95 % CI → Δ = -0.160; CAA reduces more than the best role.
 
 ### 2b. Assistant axis is effective but less efficient than both CAA and best role
 
-- Reduction per unit |coef|, axis: [TODO_EFF_AXIS] × 10⁻⁴.
-- Reduction per unit |coef|, CAA: [TODO_EFF_CAA] × 10⁻⁴.
-- Reduction per unit |coef|, best role: [TODO_EFF_ROLE] × 10⁻⁴.
+- Reduction per unit |coef|, axis: 1.92 × 10⁻⁴.
+- Reduction per unit |coef|, CAA: 4.39 × 10⁻⁴.
+- Reduction per unit |coef|, best role: 3.60 × 10⁻⁴.
   File: `paper/tables/figure_2_caa_headtohead.csv`, companion panel.
 
 **Interpretation.** A general persona direction drawn from role-playing
 (not from sycophancy-specific data) matches the targeted CAA baseline to
-within [TODO_CAA_VS_ROLE_CLAIM]. This is consistent with sycophancy being
+within Δ = -0.160; CAA reduces more than the best role. This is consistent with sycophancy being
 largely characterised by displacement along the same direction the model
 already uses for persona modulation.
 
@@ -129,20 +129,20 @@ isolates the *direction* question from the *magnitude* question.
 ### 3a. For high-cos roles, the CAA-aligned component reproduces most of the effect
 
 For roles with $|\cos(v_\text{role}, v_\text{CAA})| >$
-[TODO_HIGH_COS_THRESHOLD], the CAA-aligned component at matched
-coefficient delivers [TODO_HIGH_COS_FRAC] × the full Δlogit, while the
-residual contributes [TODO_HIGH_COS_RESID_FRAC] ×. Example roles:
-[TODO_HIGH_COS_EXAMPLES]. File:
+0.08, the CAA-aligned component at matched
+coefficient delivers 3.45 × the full Δlogit, while the
+residual contributes 0.35 ×. Example roles:
+Collaborator, Facilitator, Assistant Axis. File:
 `paper/tables/figure_3_decomposition.csv`, columns
 `fraction_from_caa_component` and `fraction_from_residual`.
 
 ### 3b. For low-cos roles, the residual carries the effect
 
 For roles with $|\cos(v_\text{role}, v_\text{CAA})| <$
-[TODO_LOW_COS_THRESHOLD], the residual at matched coefficient
-delivers [TODO_LOW_COS_FRAC] × the full Δlogit, while the CAA-aligned
-component contributes [TODO_LOW_COS_CAA_FRAC] ×. Example roles:
-[TODO_LOW_COS_EXAMPLES]. This is the headline negative-result cell — roles
+0.07, the residual at matched coefficient
+delivers 1.50 × the full Δlogit, while the CAA-aligned
+component contributes -2.91 ×. Example roles:
+Peacekeeper, Skeptic, Contrarian. This is the headline negative-result cell — roles
 that work despite being nearly orthogonal to CAA have a mechanism beyond
 the targeted direction.
 
@@ -162,15 +162,15 @@ AGREE / DISAGREE / HEDGE / REFUSE counts on 8 true claims and 8 false
 claims, for each of baseline + 11 real + 1 random.
 
 - Critical roles that most reduce sycophancy on `syc_logit` show
-  [TODO_CRITICAL_OVERCORRECTION] DISAGREE_WRONG (overcorrection) events
-  out of [TODO_TOTAL_TRUE_PROBES] TRUE-claim probes. File:
+  1 DISAGREE_WRONG (overcorrection) events
+  out of 8 TRUE-claim probes. File:
   `paper/tables/figure_4_overcorrection_taxonomy.csv`, rows with
   `claim_type == "TRUE"` and critical condition.
-- Conformist roles show [TODO_CONFORMIST_AGREE_WRONG] AGREE_WRONG
-  (sycophantic error) events on [TODO_TOTAL_FALSE_PROBES] FALSE-claim
+- Conformist roles show 0 AGREE_WRONG
+  (sycophantic error) events on 6 FALSE-claim
   probes, consistent with their increase-sycophancy effect on the
   philpapers measure.
-- HEDGE and REFUSE rates remain below [TODO_HEDGE_REFUSE_CAP] across all
+- HEDGE and REFUSE rates remain below 62% across all
   conditions, so the Δlogit effect is not driven by the model refusing or
   hedging out.
 
@@ -190,19 +190,19 @@ roles, `assistant_axis`, and `caa`. Table row summaries in
 
 Pooled Pearson $r$ of base-level syc_logit against:
 - Prompt-last-token axis projection: $r_\text{prompt}$ =
-  [TODO_R_PROMPT], $p$ = [TODO_P_PROMPT].
+  -0.184, $p$ = $4.60e-14$.
 - Response-token mean axis projection: $r_\text{resp}$ =
-  [TODO_R_RESP], $p$ = [TODO_P_RESP].
+  +0.283, $p$ = $< 10^{-15}$.
 - Bootstrap 95 % CI on $r_\text{resp} - r_\text{prompt}$:
-  [TODO_DIFF_CI]. Whether the response-token predictor is strictly better
-  is [TODO_RESP_BETTER_CLAIM].
+  [+0.411, +0.522]. Whether the response-token predictor is strictly better
+  is yes.
 
 ### CAA train / eval leakage receipt
 
 `paper/tables/caa_leakage_receipt.json` confirms zero question-text overlap
 between the CAA training datasets (NLP survey + political-typology quiz)
 and the philpapers2020 evaluation set. Exact SHA-256 overlap count:
-[TODO_LEAKAGE_COUNT].
+0.
 
 ---
 

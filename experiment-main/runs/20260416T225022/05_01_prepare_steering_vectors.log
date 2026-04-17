@@ -1,0 +1,62 @@
+axis @ L22: shape=(4608,)  norm=780.6847
+default @ L22: shape=(4608,)  norm=16326.4424
+role devils_advocate (critical): raw_norm=16098.66  (role-default)_norm=895.36
+role contrarian (critical): raw_norm=15840.99  (role-default)_norm=1116.00
+role skeptic (critical): raw_norm=16355.14  (role-default)_norm=647.56
+role judge (critical): raw_norm=16222.69  (role-default)_norm=466.24
+role scientist (critical): raw_norm=16474.71  (role-default)_norm=563.88
+role peacekeeper (conformist): raw_norm=16312.55  (role-default)_norm=646.70
+role pacifist (conformist): raw_norm=16121.37  (role-default)_norm=861.36
+role collaborator (conformist): raw_norm=16341.67  (role-default)_norm=568.78
+role facilitator (conformist): raw_norm=16357.15  (role-default)_norm=660.84
+CAA vector loaded from /home/ubuntu/Sycophancy/experiment-main/vectors/steering/caa_unit.pt
+saved assistant_axis_unit.pt  ||v||=1.000001  dtype=torch.float32
+saved devils_advocate_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved contrarian_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved skeptic_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved judge_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved scientist_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved peacekeeper_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved pacifist_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved collaborator_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved facilitator_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_0_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_1_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_2_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_3_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_4_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_5_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_6_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_7_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_8_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved random_9_unit.pt  ||v||=1.000000  dtype=torch.float32
+saved caa_unit.pt  ||v||=1.000000  dtype=torch.float32
+
+=== CAA Decomposition ===
+  assistant_axis: cos(CAA)=-0.0860  ||caa_comp||=0.0860  ||residual||=0.9963
+  devils_advocate: cos(CAA)=+0.0030  ||caa_comp||=0.0030  ||residual||=1.0000
+  contrarian: cos(CAA)=+0.0326  ||caa_comp||=0.0326  ||residual||=0.9995
+  skeptic: cos(CAA)=+0.0640  ||caa_comp||=0.0640  ||residual||=0.9979
+  judge: cos(CAA)=+0.0854  ||caa_comp||=0.0854  ||residual||=0.9963
+  scientist: cos(CAA)=+0.0040  ||caa_comp||=0.0040  ||residual||=1.0000
+  peacekeeper: cos(CAA)=+0.0651  ||caa_comp||=0.0651  ||residual||=0.9979
+  pacifist: cos(CAA)=+0.0757  ||caa_comp||=0.0757  ||residual||=0.9971
+  collaborator: cos(CAA)=+0.1648  ||caa_comp||=0.1648  ||residual||=0.9863
+  facilitator: cos(CAA)=+0.1459  ||caa_comp||=0.1459  ||residual||=0.9893
+
+=== Cosine similarity matrix ===
+               assistant_axi devils_advoca    contrarian       skeptic         judge     scientist   peacekeeper      pacifist  collaborator   facilitator           caa      random_0
+assistant_axi         1.0000       -0.6385       -0.8009       -0.2726       -0.5110       -0.0716       -0.5160       -0.6801       -0.2487       -0.1611       -0.0860       -0.0258
+devils_advoca        -0.6385        1.0000        0.8834        0.6411        0.4334        0.1132        0.3499        0.4086        0.1889        0.1352        0.0030        0.0152
+contrarian           -0.8009        0.8834        1.0000        0.4101        0.3941       -0.0572        0.3850        0.5659        0.0878       -0.0060        0.0326        0.0231
+skeptic              -0.2726        0.6411        0.4101        1.0000        0.5146        0.6340        0.3117        0.1257        0.4112        0.4712        0.0640        0.0173
+judge                -0.5110        0.4334        0.3941        0.5146        1.0000        0.5681        0.6530        0.5540        0.1963        0.2844        0.0854        0.0253
+scientist            -0.0716        0.1132       -0.0572        0.6340        0.5681        1.0000        0.4325        0.1350        0.4007        0.4943        0.0040        0.0197
+peacekeeper          -0.5160        0.3499        0.3850        0.3117        0.6530        0.4325        1.0000        0.8492        0.4330        0.4153        0.0651        0.0170
+pacifist             -0.6801        0.4086        0.5659        0.1257        0.5540        0.1350        0.8492        1.0000        0.2486        0.1520        0.0757        0.0154
+collaborator         -0.2487        0.1889        0.0878        0.4112        0.1963        0.4007        0.4330        0.2486        1.0000        0.8981        0.1648        0.0120
+facilitator          -0.1611        0.1352       -0.0060        0.4712        0.2844        0.4943        0.4153        0.1520        0.8981        1.0000        0.1459        0.0078
+caa                  -0.0860        0.0030        0.0326        0.0640        0.0854        0.0040        0.0651        0.0757        0.1648        0.1459        1.0000        0.0075
+random_0             -0.0258        0.0152        0.0231        0.0173        0.0253        0.0197        0.0170        0.0154        0.0120        0.0078        0.0075        1.0000
+
+Script 1 done.

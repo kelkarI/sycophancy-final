@@ -1,0 +1,16 @@
+Aggregating seeds: [123, 42, 456, 7, 789] for split=test
+  WARN: seed 456: missing rates/tests JSONs (split=test)
+  WARN: seed 789: missing rates/tests JSONs (split=test)
+  assistant_axis       n=3  logit=+0.639 ±0.032  sig 3/3
+  devils_advocate      n=3  logit=+0.494 ±0.028  sig 3/3
+  contrarian           n=3  logit=+0.729 ±0.007  sig 3/3
+  skeptic              n=3  logit=+0.304 ±0.027  sig 3/3
+  judge                n=3  logit=+0.458 ±0.013  sig 3/3
+  scientist            n=3  logit=+0.506 ±0.005  sig 3/3
+  peacekeeper          n=3  logit=+0.963 ±0.018  sig 0/3
+  pacifist             n=3  logit=+1.115 ±0.013  sig 1/3
+  collaborator         n=3  logit=+1.060 ±0.009  sig 2/3
+  facilitator          n=3  logit=+0.288 ±0.019  sig 0/3
+  caa                  n=3  logit=+0.135 ±0.014  sig 3/3
+
+Wrote /home/ubuntu/Sycophancy/experiment-main/results/multiseed_aggregate_test.json

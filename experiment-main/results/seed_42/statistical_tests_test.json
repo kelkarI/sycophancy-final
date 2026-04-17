@@ -1,0 +1,773 @@
+{
+  "primary_wilcoxon_best_vs_baseline": {
+    "assistant_axis": {
+      "condition": "assistant_axis",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.3863541603088379,
+      "median_diff": -0.3124997615814209,
+      "statistic": 1077.0,
+      "p_value_raw": 3.8585451546333654e-18,
+      "p_value_two_sided_raw": 7.717090309266731e-18,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.6174479389190674,
+      "best_rate": 0.54,
+      "p_value_adjusted": 2.700981608243356e-17,
+      "significant_after_mcc": true
+    },
+    "devils_advocate": {
+      "condition": "devils_advocate",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.5206770737965901,
+      "median_diff": -0.234375,
+      "statistic": 1274.0,
+      "p_value_raw": 2.435557240942886e-16,
+      "p_value_two_sided_raw": 4.871114481885772e-16,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.4831250254313151,
+      "best_rate": 0.5133333333333333,
+      "p_value_adjusted": 1.4613343445657317e-15,
+      "significant_after_mcc": true
+    },
+    "contrarian": {
+      "condition": "contrarian",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.2675520912806193,
+      "median_diff": -0.0781254768371582,
+      "statistic": 2784.0,
+      "p_value_raw": 8.747475168788269e-08,
+      "p_value_two_sided_raw": 1.7494950337576537e-07,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.736250007947286,
+      "best_rate": 0.5666666666666667,
+      "p_value_adjusted": 4.373737584394134e-07,
+      "significant_after_mcc": true
+    },
+    "skeptic": {
+      "condition": "skeptic",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.7178645944595337,
+      "median_diff": -0.48046863079071045,
+      "statistic": 714.5,
+      "p_value_raw": 8.186201602877612e-21,
+      "p_value_two_sided_raw": 1.6372403205755224e-20,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.2859375047683716,
+      "best_rate": 0.5,
+      "p_value_adjusted": 8.186201602877612e-20,
+      "significant_after_mcc": true
+    },
+    "judge": {
+      "condition": "judge",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.5529687833786011,
+      "median_diff": -0.31640625,
+      "statistic": 758.5,
+      "p_value_raw": 1.7705409357231402e-20,
+      "p_value_two_sided_raw": 3.5410818714462804e-20,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.4508333158493042,
+      "best_rate": 0.5033333333333333,
+      "p_value_adjusted": 1.4164327485785122e-19,
+      "significant_after_mcc": true
+    },
+    "scientist": {
+      "condition": "scientist",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.497447935740153,
+      "median_diff": -0.2812502384185791,
+      "statistic": 715.5,
+      "p_value_raw": 1.3153739911461613e-20,
+      "p_value_two_sided_raw": 2.6307479822923225e-20,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.5063541634877523,
+      "best_rate": 0.52,
+      "p_value_adjusted": 1.183836592031545e-19,
+      "significant_after_mcc": true
+    },
+    "peacekeeper": {
+      "condition": "peacekeeper",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": -0.05630208571751912,
+      "median_diff": -0.0937497615814209,
+      "statistic": 3954.0,
+      "p_value_raw": 0.9990183685593498,
+      "p_value_two_sided_raw": 0.00196326288130047,
+      "alternative": "greater",
+      "expected_direction": "increase",
+      "best_logit": 0.9475000135103862,
+      "best_rate": 0.6,
+      "p_value_adjusted": 1.0,
+      "significant_after_mcc": false
+    },
+    "pacifist": {
+      "condition": "pacifist",
+      "best_coef": 2000.0,
+      "n_base": 150,
+      "mean_diff": 0.10124998728434245,
+      "median_diff": 0.03125,
+      "statistic": 6614.5,
+      "p_value_raw": 0.01150714180266883,
+      "p_value_two_sided_raw": 0.02301428360533766,
+      "alternative": "greater",
+      "expected_direction": "increase",
+      "best_logit": 1.1050520865122477,
+      "best_rate": 0.5833333333333334,
+      "p_value_adjusted": 0.034521425408006484,
+      "significant_after_mcc": true
+    },
+    "collaborator": {
+      "condition": "collaborator",
+      "best_coef": 500.0,
+      "n_base": 150,
+      "mean_diff": 0.04755209604899088,
+      "median_diff": 0.015625357627868652,
+      "statistic": 6758.5,
+      "p_value_raw": 0.003245956187621195,
+      "p_value_two_sided_raw": 0.00649191237524239,
+      "alternative": "greater",
+      "expected_direction": "increase",
+      "best_logit": 1.051354195276896,
+      "best_rate": 0.6033333333333334,
+      "p_value_adjusted": 0.01298382475048478,
+      "significant_after_mcc": true
+    },
+    "facilitator": {
+      "condition": "facilitator",
+      "best_coef": -5000.0,
+      "n_base": 150,
+      "mean_diff": -0.735989572207133,
+      "median_diff": -0.4531254768371582,
+      "statistic": 1030.5,
+      "p_value_raw": 1.0,
+      "p_value_two_sided_raw": 3.5985806360543755e-18,
+      "alternative": "greater",
+      "expected_direction": "increase",
+      "best_logit": 0.2678125270207723,
+      "best_rate": 0.5066666666666667,
+      "p_value_adjusted": 1.0,
+      "significant_after_mcc": false
+    },
+    "caa": {
+      "condition": "caa",
+      "best_coef": -2000.0,
+      "n_base": 150,
+      "mean_diff": -0.8800520944595337,
+      "median_diff": -0.5703122615814209,
+      "statistic": 320.0,
+      "p_value_raw": 2.101167564985267e-23,
+      "p_value_two_sided_raw": 4.202335129970534e-23,
+      "alternative": "less",
+      "expected_direction": "decrease",
+      "best_logit": 0.12375000476837159,
+      "best_rate": 0.5066666666666667,
+      "p_value_adjusted": 2.3112843214837934e-22,
+      "significant_after_mcc": true
+    }
+  },
+  "mcnemar_best_vs_baseline": {
+    "assistant_axis": {
+      "b11": 160,
+      "b10": 18,
+      "b01": 2,
+      "b00": 120,
+      "statistic": 2.0,
+      "p_value": 0.0004024505615234375,
+      "p_value_adjusted": 0.0020122528076171875,
+      "significant_after_mcc": true,
+      "best_coef": 2000.0,
+      "exact_test_used": true
+    },
+    "devils_advocate": {
+      "b11": 153,
+      "b10": 25,
+      "b01": 1,
+      "b00": 121,
+      "statistic": 1.0,
+      "p_value": 8.046627044677734e-07,
+      "p_value_adjusted": 5.632638931274414e-06,
+      "significant_after_mcc": true,
+      "best_coef": 2000.0,
+      "exact_test_used": true
+    },
+    "contrarian": {
+      "b11": 166,
+      "b10": 12,
+      "b01": 4,
+      "b00": 118,
+      "statistic": 4.0,
+      "p_value": 0.076812744140625,
+      "p_value_adjusted": 0.3072509765625,
+      "significant_after_mcc": false,
+      "best_coef": 2000.0,
+      "exact_test_used": true
+    },
+    "skeptic": {
+      "b11": 149,
+      "b10": 29,
+      "b01": 1,
+      "b00": 121,
+      "statistic": 1.0,
+      "p_value": 5.774199962615967e-08,
+      "p_value_adjusted": 6.351619958877563e-07,
+      "significant_after_mcc": true,
+      "best_coef": 2000.0,
+      "exact_test_used": true
+    },
+    "judge": {
+      "b11": 150,
+      "b10": 28,
+      "b01": 1,
+      "b00": 121,
+      "statistic": 1.0,
+      "p_value": 1.1175870895385742e-07,
+      "p_value_adjusted": 1.1175870895385742e-06,
+      "significant_after_mcc": true,
+      "best_coef": 2000.0,
+      "exact_test_used": true
+    },
+    "scientist": {
+      "b11": 155,
+      "b10": 23,
+      "b01": 1,
+      "b00": 121,
+      "statistic": 1.0,
+      "p_value": 2.9802322387695312e-06,
+      "p_value_adjusted": 1.7881393432617188e-05,
+      "significant_after_mcc": true,
+      "best_coef": 2000.0,
+      "exact_test_used": true
+    },
+    "peacekeeper": {
+      "b11": 171,
+      "b10": 7,
+      "b01": 9,
+      "b00": 113,
+      "statistic": 0.0625,
+      "p_value": 0.8025873486341526,
+      "p_value_adjusted": 1.0,
+      "significant_after_mcc": false,
+      "best_coef": 2000.0,
+      "exact_test_used": false
+    },
+    "pacifist": {
+      "b11": 168,
+      "b10": 10,
+      "b01": 7,
+      "b00": 115,
+      "statistic": 0.23529411764705882,
+      "p_value": 0.6276258050283593,
+      "p_value_adjusted": 1.0,
+      "significant_after_mcc": false,
+      "best_coef": 2000.0,
+      "exact_test_used": false
+    },
+    "collaborator": {
+      "b11": 176,
+      "b10": 2,
+      "b01": 5,
+      "b00": 117,
+      "statistic": 2.0,
+      "p_value": 0.453125,
+      "p_value_adjusted": 1.0,
+      "significant_after_mcc": false,
+      "best_coef": 500.0,
+      "exact_test_used": true
+    },
+    "facilitator": {
+      "b11": 151,
+      "b10": 27,
+      "b01": 1,
+      "b00": 121,
+      "statistic": 1.0,
+      "p_value": 2.1606683731079102e-07,
+      "p_value_adjusted": 1.944601535797119e-06,
+      "significant_after_mcc": true,
+      "best_coef": -5000.0,
+      "exact_test_used": true
+    },
+    "caa": {
+      "b11": 151,
+      "b10": 27,
+      "b01": 1,
+      "b00": 121,
+      "statistic": 1.0,
+      "p_value": 2.1606683731079102e-07,
+      "p_value_adjusted": 1.944601535797119e-06,
+      "significant_after_mcc": true,
+      "best_coef": -2000.0,
+      "exact_test_used": true
+    }
+  },
+  "real_vs_random_mean": {
+    "assistant_axis": {
+      "coef": 2000.0,
+      "real_logit": 0.6174479389190674,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.25508330742518115
+    },
+    "devils_advocate": {
+      "coef": 2000.0,
+      "real_logit": 0.4831250254313151,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.3894062209129334
+    },
+    "contrarian": {
+      "coef": 2000.0,
+      "real_logit": 0.736250007947286,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.1362812383969625
+    },
+    "skeptic": {
+      "coef": 2000.0,
+      "real_logit": 0.2859375047683716,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.5865937415758768
+    },
+    "judge": {
+      "coef": 2000.0,
+      "real_logit": 0.4508333158493042,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.4216979304949443
+    },
+    "scientist": {
+      "coef": 2000.0,
+      "real_logit": 0.5063541634877523,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.3661770828564962
+    },
+    "peacekeeper": {
+      "coef": 2000.0,
+      "real_logit": 0.9475000135103862,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": -0.07496876716613765
+    },
+    "pacifist": {
+      "coef": 2000.0,
+      "real_logit": 1.1050520865122477,
+      "random_mean_logit": 0.8725312463442485,
+      "random_std_logit": 0.1607161444967591,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": -0.23252084016799923
+    },
+    "collaborator": {
+      "coef": 500.0,
+      "real_logit": 1.051354195276896,
+      "random_mean_logit": 1.0090937585830688,
+      "random_std_logit": 0.050546471852801686,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": -0.042260436693827286
+    },
+    "facilitator": {
+      "coef": -5000.0,
+      "real_logit": 0.2678125270207723,
+      "random_mean_logit": 0.16687499411900836,
+      "random_std_logit": 0.06625601725322902,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": -0.10093753290176394
+    },
+    "caa": {
+      "coef": -2000.0,
+      "real_logit": 0.12375000476837159,
+      "random_mean_logit": 0.8008749916553498,
+      "random_std_logit": 0.15208421758362825,
+      "n_random_vectors": 10,
+      "excess_over_random_mean": 0.6771249868869782
+    }
+  },
+  "dose_response_row_level": {
+    "assistant_axis": {
+      "rho": -0.08727108571142192,
+      "p_value": 0.00247990225727646,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "devils_advocate": {
+      "rho": -0.05318274714406804,
+      "p_value": 0.06552082368284724,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "contrarian": {
+      "rho": -0.08235835027054737,
+      "p_value": 0.004305652755732843,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "skeptic": {
+      "rho": -0.04331845166999701,
+      "p_value": 0.1336829807739863,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "judge": {
+      "rho": -0.03944543274289861,
+      "p_value": 0.17208424481766027,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "scientist": {
+      "rho": -0.025104591240642748,
+      "p_value": 0.3849132251848928,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "peacekeeper": {
+      "rho": -0.08047364000277132,
+      "p_value": 0.005282077318813759,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "pacifist": {
+      "rho": -0.04136797178996211,
+      "p_value": 0.1521014167066057,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "collaborator": {
+      "rho": -0.12284644705041102,
+      "p_value": 1.978858715357881e-05,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "facilitator": {
+      "rho": -0.11366779684635457,
+      "p_value": 7.938127006386034e-05,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    },
+    "caa": {
+      "rho": -0.055224657896001984,
+      "p_value": 0.055811562883077925,
+      "n_rows": 1200,
+      "n_coefficients": 4,
+      "note": "Row-level Spearman across all positive coefficients (not 6-point aggregate)"
+    }
+  },
+  "dose_response_aggregate_6pt": {
+    "assistant_axis": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "devils_advocate": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "contrarian": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "skeptic": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "judge": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "scientist": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "peacekeeper": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "pacifist": {
+      "rho": -0.39999999999999997,
+      "p_value": 0.6,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "collaborator": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "facilitator": {
+      "rho": -1.0,
+      "p_value": 1e-300,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "caa": {
+      "rho": -0.39999999999999997,
+      "p_value": 0.6,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    },
+    "random_0": {
+      "rho": -0.7999999999999999,
+      "p_value": 0.20000000000000007,
+      "n_points": 4,
+      "note": "6-point aggregate Spearman (included for comparison only; see row-level for primary)"
+    }
+  },
+  "axis_projection_baseline": {
+    "N_base": 150,
+    "pearson_r": -0.21068297587578488,
+    "pearson_p": 0.009657492136080446,
+    "mean_proj_highsyc_quartile": 12719.111766326121,
+    "mean_proj_lowsyc_quartile": 12876.125713641826,
+    "welch_t": -3.3880069155917627,
+    "welch_p": 0.0011233714507836395,
+    "cohens_d": -0.7672324844095242,
+    "per_base_binary": {
+      "true_syc": 29,
+      "true_hon": 1,
+      "positional": 120
+    }
+  },
+  "axis_projection_pooled": {
+    "pearson_r": -0.04240725013535642,
+    "pearson_p": 2.345172649788472e-07,
+    "n_datapoints": 14850,
+    "note": "Pooled across all real conditions and coefficients, base-level averaged"
+  },
+  "axis_projection_response_token": {
+    "pearson_r": null,
+    "pearson_p": null,
+    "n_datapoints": 0,
+    "prompt_token_pearson_r_for_comparison": -0.04240725013535642,
+    "note": "response_projection missing or NaN for most rows"
+  },
+  "caa_decomposition": {
+    "assistant_axis": {
+      "cosine_with_caa": -0.08600328862667084,
+      "caa_component_norm": 0.08600326627492905,
+      "residual_norm": 0.9962955117225647
+    },
+    "devils_advocate": {
+      "cosine_with_caa": 0.003016835078597069,
+      "caa_component_norm": 0.0030168346129357815,
+      "residual_norm": 0.9999953508377075
+    },
+    "contrarian": {
+      "cosine_with_caa": 0.032646119594573975,
+      "caa_component_norm": 0.03264611214399338,
+      "residual_norm": 0.9994669556617737
+    },
+    "skeptic": {
+      "cosine_with_caa": 0.0640062540769577,
+      "caa_component_norm": 0.06400623917579651,
+      "residual_norm": 0.9979497194290161
+    },
+    "judge": {
+      "cosine_with_caa": 0.08541703969240189,
+      "caa_component_norm": 0.08541703224182129,
+      "residual_norm": 0.9963456988334656
+    },
+    "scientist": {
+      "cosine_with_caa": 0.004034317098557949,
+      "caa_component_norm": 0.004034316632896662,
+      "residual_norm": 0.9999919533729553
+    },
+    "peacekeeper": {
+      "cosine_with_caa": 0.06511015444993973,
+      "caa_component_norm": 0.06511013209819794,
+      "residual_norm": 0.9978785514831543
+    },
+    "pacifist": {
+      "cosine_with_caa": 0.07565366476774216,
+      "caa_component_norm": 0.07565364241600037,
+      "residual_norm": 0.9971344470977783
+    },
+    "collaborator": {
+      "cosine_with_caa": 0.16481372714042664,
+      "caa_component_norm": 0.16481366753578186,
+      "residual_norm": 0.986325204372406
+    },
+    "facilitator": {
+      "cosine_with_caa": 0.14594495296478271,
+      "caa_component_norm": 0.14594492316246033,
+      "residual_norm": 0.9892930388450623
+    }
+  },
+  "efficiency": {
+    "assistant_axis": {
+      "reduction": 0.38635416030883796,
+      "magnitude": 2000.0,
+      "efficiency": 0.000193177080154419,
+      "cosine_with_caa": -0.08600328862667084
+    },
+    "devils_advocate": {
+      "reduction": 0.5206770737965902,
+      "magnitude": 2000.0,
+      "efficiency": 0.0002603385368982951,
+      "cosine_with_caa": 0.003016835078597069
+    },
+    "contrarian": {
+      "reduction": 0.2675520912806193,
+      "magnitude": 2000.0,
+      "efficiency": 0.00013377604564030965,
+      "cosine_with_caa": 0.032646119594573975
+    },
+    "skeptic": {
+      "reduction": 0.7178645944595337,
+      "magnitude": 2000.0,
+      "efficiency": 0.00035893229722976685,
+      "cosine_with_caa": 0.0640062540769577
+    },
+    "judge": {
+      "reduction": 0.5529687833786011,
+      "magnitude": 2000.0,
+      "efficiency": 0.00027648439168930053,
+      "cosine_with_caa": 0.08541703969240189
+    },
+    "scientist": {
+      "reduction": 0.497447935740153,
+      "magnitude": 2000.0,
+      "efficiency": 0.0002487239678700765,
+      "cosine_with_caa": 0.004034317098557949
+    },
+    "peacekeeper": {
+      "reduction": 0.05630208571751916,
+      "magnitude": 2000.0,
+      "efficiency": 2.815104285875958e-05,
+      "cosine_with_caa": 0.06511015444993973
+    },
+    "pacifist": {
+      "reduction": -0.10124998728434242,
+      "magnitude": 2000.0,
+      "efficiency": -5.062499364217121e-05,
+      "cosine_with_caa": 0.07565366476774216
+    },
+    "collaborator": {
+      "reduction": -0.0475520960489908,
+      "magnitude": 500.0,
+      "efficiency": -9.51041920979816e-05,
+      "cosine_with_caa": 0.16481372714042664
+    },
+    "facilitator": {
+      "reduction": 0.735989572207133,
+      "magnitude": 5000.0,
+      "efficiency": 0.0001471979144414266,
+      "cosine_with_caa": 0.14594495296478271
+    },
+    "caa": {
+      "reduction": 0.8800520944595337,
+      "magnitude": 2000.0,
+      "efficiency": 0.00044002604722976686,
+      "cosine_with_caa": 0.0
+    }
+  },
+  "pca_persona_space": {
+    "pc1_variance_ratio": 0.3145817220211029,
+    "pc2_variance_ratio": 0.1858910173177719,
+    "vector_names": [
+      "assistant_axis",
+      "devils_advocate",
+      "contrarian",
+      "skeptic",
+      "judge",
+      "scientist",
+      "peacekeeper",
+      "pacifist",
+      "collaborator",
+      "facilitator",
+      "random_0",
+      "caa"
+    ],
+    "coordinates": [
+      [
+        1.1652809381484985,
+        -0.3123767375946045
+      ],
+      [
+        -0.5207642316818237,
+        -0.2874135971069336
+      ],
+      [
+        -0.6353797912597656,
+        -0.43767428398132324
+      ],
+      [
+        -0.08873070776462555,
+        0.2007995843887329
+      ],
+      [
+        -0.3287055492401123,
+        0.11045267432928085
+      ],
+      [
+        0.19925644993782043,
+        0.4585046172142029
+      ],
+      [
+        -0.3523598611354828,
+        0.18243873119354248
+      ],
+      [
+        -0.5102804899215698,
+        -0.12556791305541992
+      ],
+      [
+        0.15025579929351807,
+        0.5120584964752197
+      ],
+      [
+        0.22984957695007324,
+        0.5811527967453003
+      ],
+      [
+        0.3694637417793274,
+        -0.5718604326248169
+      ],
+      [
+        0.3221144676208496,
+        -0.31051263213157654
+      ]
+    ]
+  }
+}
