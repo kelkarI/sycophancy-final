@@ -8,7 +8,7 @@ role-playing can steer the model away from sycophancy as effectively as the
 targeted **Contrastive Activation Addition (CAA, Rimsky et al. 2024)** vector
 trained on sycophancy-specific data.
 
-## Three findings
+## Four findings
 
 1. **Role-direction steering is bidirectional on sycophancy.** Critical roles
    reduce sycophancy (all 5 significant after Holm across 5 tune / 3 test
@@ -28,6 +28,29 @@ trained on sycophancy-specific data.
    while the CAA-aligned piece opposes the role's reduction direction. Role
    sycophancy-reduction operates through a mechanism orthogonal to the
    targeted CAA direction.
+4. **The matched-coefficient decomposition pattern does NOT replicate when
+   residuals are evaluated as standalone steering directions with their own
+   tune-locked coefficients.** We added three new conditions to the 21-condition
+   pipeline: the CAA-orthogonal residuals of Skeptic (|cos|=0.064),
+   Contrarian (0.033), and Collaborator (0.165 — the highest-|cos| role in
+   the decomposition). Each was put through the same tune/test protocol as
+   every other condition, with Holm correction re-run across all 24
+   conditions. On the held-out test split:
+
+   | Condition | Best coef (locked) | Parent's coef | Δ logit [95% CI] | Holm p |
+   |---|---|---|---|---|
+   | Skeptic ⊥ CAA | +2000 | +2000 (same) | −0.753 [−0.96, −0.57] | 3.6e-11 ✱ |
+   | Contrarian ⊥ CAA | +2000 | +1000 (differs) | −0.321 [−0.55, −0.10] | 0.072 ns |
+   | Collaborator ⊥ CAA | +5000 | +500 (differs) | −0.929 [−1.13, −0.76] | <1e-15 ✱ |
+
+   The *highest*-cosine residual (Collaborator) produced the *largest*
+   reduction; the *lowest*-cosine residual (Contrarian) failed Holm
+   significance. The matched-coefficient finding in #3 — that residuals
+   carry the effect while CAA-aligned components do not — does not in
+   itself imply that a high-|cos(CAA)| role's residual fails to reduce
+   sycophancy when given its own tune-locked coefficient. Results in
+   `experiment-main/results/residual_standalone_report_test.csv`, plot in
+   `experiment-main/figures/fig7_residual_standalone_vs_parent.png`.
 
 Full write-up with file-traced numbers: `experiment-main/paper/RESULTS.md`.
 Methods: `experiment-main/paper/METHODS.md`. Limitations:

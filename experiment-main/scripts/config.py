@@ -40,12 +40,37 @@ ROLE_NAMES = CRITICAL_ROLES + CONFORMIST_ROLES
 N_RANDOM_VECTORS = 10  # number of random control vectors
 RANDOM_SEED_BASE = 1234  # seed for first random vector; i-th uses seed + i
 
+# Standalone CAA-orthogonal residuals. Each is the role vector minus its
+# projection onto CAA, unit-normalized (produced by 01_prepare_steering_vectors.py
+# and saved as vectors/steering/{role}_residual_unit.pt). Evaluated here as
+# fresh independent steering conditions with their own tune-locked coefficients.
+# skeptic, contrarian: representative low-|cos(CAA)| residuals.
+# collaborator: highest-|cos(CAA)| role (0.165) from caa_decomposition.json.
+RESIDUAL_STANDALONE_ROLES = ["skeptic", "contrarian", "collaborator"]
+CONDITIONS_RESIDUAL_STANDALONE = [f"{r}_residual" for r in RESIDUAL_STANDALONE_ROLES]
+
 # CONDITIONS is built dynamically to include all conditions
-CONDITIONS_REAL = ["assistant_axis"] + ROLE_NAMES + ["caa"]
+CONDITIONS_REAL = (
+    ["assistant_axis"] + ROLE_NAMES + ["caa"] + CONDITIONS_RESIDUAL_STANDALONE
+)
 CONDITIONS_CRITICAL = ["assistant_axis"] + CRITICAL_ROLES + ["caa"]
 CONDITIONS_CONFORMIST = CONFORMIST_ROLES
 CONDITIONS_RANDOM = [f"random_{i}" for i in range(N_RANDOM_VECTORS)]
 CONDITIONS = CONDITIONS_REAL + CONDITIONS_RANDOM
+
+# Type tag used when emitting rows to the results CSV so the residual-standalone
+# rows can be filtered out of primary-result tables and into the ablation table.
+CONDITION_TYPE = {}
+for _c in ["assistant_axis", "caa"]:
+    CONDITION_TYPE[_c] = "primary"
+for _r in CRITICAL_ROLES:
+    CONDITION_TYPE[_r] = "critical_role"
+for _r in CONFORMIST_ROLES:
+    CONDITION_TYPE[_r] = "conformist_role"
+for _c in CONDITIONS_RANDOM:
+    CONDITION_TYPE[_c] = "random_control"
+for _c in CONDITIONS_RESIDUAL_STANDALONE:
+    CONDITION_TYPE[_c] = "residual_standalone"
 
 # ---- Coefficient sweep ----
 # Reduced from 13 points to 9 to fit the multi-seed GPU budget while keeping
@@ -106,6 +131,11 @@ COLORS = {
     "pacifist":    "#bcbd22",
     "collaborator": "#e7969c",
     "facilitator": "#aec7e8",
+    # Standalone CAA-orthogonal residuals (distinct hues so they read as a
+    # separate family from their parent roles in fig1/fig4).
+    "skeptic_residual":      "#6a3d9a",
+    "contrarian_residual":   "#1b9e77",
+    "collaborator_residual": "#b15928",
 }
 for i in range(N_RANDOM_VECTORS):
     COLORS[f"random_{i}"] = "#7f7f7f"
@@ -124,6 +154,10 @@ LABELS = {
     "pacifist":    "Pacifist",
     "collaborator": "Collaborator",
     "facilitator": "Facilitator",
+    # Standalone residuals
+    "skeptic_residual":      "Skeptic \u22a5 CAA",
+    "contrarian_residual":   "Contrarian \u22a5 CAA",
+    "collaborator_residual": "Collaborator \u22a5 CAA",
 }
 for i in range(N_RANDOM_VECTORS):
     LABELS[f"random_{i}"] = f"Random {i}" if N_RANDOM_VECTORS > 1 else "Random (ctrl)"
@@ -152,3 +186,12 @@ for _r in CONFORMIST_ROLES:
     EXPECTED_DIRECTION[_r] = "increase"
 for _i in range(N_RANDOM_VECTORS):
     EXPECTED_DIRECTION[f"random_{_i}"] = "unsigned"
+# Standalone residuals all use the "decrease" selector. Rationale: the
+# hypothesis under test is the decomposition claim that low-|cos(CAA)|
+# residuals reduce sycophancy while high-|cos(CAA)| residuals do not. That
+# is a statement about syc REDUCTION for all three residuals, irrespective
+# of whether their parent role was critical or conformist. Using parent
+# direction (e.g. "increase" for collaborator_residual) would test a
+# different, tangential question.
+for _role in RESIDUAL_STANDALONE_ROLES:
+    EXPECTED_DIRECTION[f"{_role}_residual"] = "decrease"
