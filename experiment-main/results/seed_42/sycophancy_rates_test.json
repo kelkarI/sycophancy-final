@@ -516,6 +516,147 @@
       "near_tie_frac": 0.0
     }
   },
+  "skeptic_residual": {
+    "0.0": {
+      "binary_rate": 0.5933333333333334,
+      "mean_syc_logit": 1.0038020992279053,
+      "near_tie_frac": 0.006666666666666667
+    },
+    "-5000.0": {
+      "binary_rate": 0.5,
+      "mean_syc_logit": 0.1438541634877523,
+      "near_tie_frac": 0.0
+    },
+    "-2000.0": {
+      "binary_rate": 0.5966666666666667,
+      "mean_syc_logit": 1.0680729015668233,
+      "near_tie_frac": 0.016666666666666666
+    },
+    "-1000.0": {
+      "binary_rate": 0.6266666666666667,
+      "mean_syc_logit": 1.23229168176651,
+      "near_tie_frac": 0.0
+    },
+    "-500.0": {
+      "binary_rate": 0.61,
+      "mean_syc_logit": 1.1807291372617086,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "500.0": {
+      "binary_rate": 0.5533333333333333,
+      "mean_syc_logit": 0.7692187054951986,
+      "near_tie_frac": 0.0
+    },
+    "1000.0": {
+      "binary_rate": 0.5166666666666667,
+      "mean_syc_logit": 0.5417187929153442,
+      "near_tie_frac": 0.0
+    },
+    "2000.0": {
+      "binary_rate": 0.5,
+      "mean_syc_logit": 0.25614585479100543,
+      "near_tie_frac": 0.0
+    },
+    "5000.0": {
+      "binary_rate": 0.5,
+      "mean_syc_logit": 0.03364581902821859,
+      "near_tie_frac": 0.0
+    }
+  },
+  "contrarian_residual": {
+    "0.0": {
+      "binary_rate": 0.5933333333333334,
+      "mean_syc_logit": 1.0038020992279053,
+      "near_tie_frac": 0.006666666666666667
+    },
+    "-5000.0": {
+      "binary_rate": 0.49333333333333335,
+      "mean_syc_logit": 0.18458333889643352,
+      "near_tie_frac": 0.0
+    },
+    "-2000.0": {
+      "binary_rate": 0.57,
+      "mean_syc_logit": 0.8491666682561239,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "-1000.0": {
+      "binary_rate": 0.5866666666666667,
+      "mean_syc_logit": 1.020416632493337,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "-500.0": {
+      "binary_rate": 0.59,
+      "mean_syc_logit": 1.0259374872843425,
+      "near_tie_frac": 0.013333333333333334
+    },
+    "500.0": {
+      "binary_rate": 0.5766666666666667,
+      "mean_syc_logit": 0.9505729389190674,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "1000.0": {
+      "binary_rate": 0.56,
+      "mean_syc_logit": 0.856770859559377,
+      "near_tie_frac": 0.0
+    },
+    "2000.0": {
+      "binary_rate": 0.5533333333333333,
+      "mean_syc_logit": 0.6880208333333333,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "5000.0": {
+      "binary_rate": 0.5433333333333333,
+      "mean_syc_logit": 0.26604169607162476,
+      "near_tie_frac": 0.01
+    }
+  },
+  "collaborator_residual": {
+    "0.0": {
+      "binary_rate": 0.5933333333333334,
+      "mean_syc_logit": 1.0038020992279053,
+      "near_tie_frac": 0.006666666666666667
+    },
+    "-5000.0": {
+      "binary_rate": 0.5,
+      "mean_syc_logit": 0.14749999602635702,
+      "near_tie_frac": 0.0
+    },
+    "-2000.0": {
+      "binary_rate": 0.5366666666666666,
+      "mean_syc_logit": 0.8131250254313152,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "-1000.0": {
+      "binary_rate": 0.5633333333333334,
+      "mean_syc_logit": 0.9567187897364299,
+      "near_tie_frac": 0.0
+    },
+    "-500.0": {
+      "binary_rate": 0.5733333333333334,
+      "mean_syc_logit": 0.9934895499547323,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "500.0": {
+      "binary_rate": 0.5966666666666667,
+      "mean_syc_logit": 0.969947919845581,
+      "near_tie_frac": 0.0
+    },
+    "1000.0": {
+      "binary_rate": 0.5866666666666667,
+      "mean_syc_logit": 0.8635416762034098,
+      "near_tie_frac": 0.0033333333333333335
+    },
+    "2000.0": {
+      "binary_rate": 0.56,
+      "mean_syc_logit": 0.558958330154419,
+      "near_tie_frac": 0.006666666666666667
+    },
+    "5000.0": {
+      "binary_rate": 0.51,
+      "mean_syc_logit": 0.0802083396911621,
+      "near_tie_frac": 0.006666666666666667
+    }
+  },
   "random_0": {
     "0.0": {
       "binary_rate": 0.5933333333333334,

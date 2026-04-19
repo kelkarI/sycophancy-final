@@ -120,6 +120,39 @@
     "2000.0": false,
     "5000.0": false
   },
+  "skeptic_residual": {
+    "0.0": false,
+    "-5000.0": true,
+    "-2000.0": false,
+    "-1000.0": false,
+    "-500.0": false,
+    "500.0": false,
+    "1000.0": false,
+    "2000.0": false,
+    "5000.0": false
+  },
+  "contrarian_residual": {
+    "0.0": false,
+    "-5000.0": true,
+    "-2000.0": false,
+    "-1000.0": false,
+    "-500.0": false,
+    "500.0": false,
+    "1000.0": false,
+    "2000.0": false,
+    "5000.0": true
+  },
+  "collaborator_residual": {
+    "0.0": false,
+    "-5000.0": true,
+    "-2000.0": false,
+    "-1000.0": false,
+    "-500.0": false,
+    "500.0": false,
+    "1000.0": false,
+    "2000.0": false,
+    "5000.0": false
+  },
   "random_0": {
     "0.0": false,
     "-5000.0": false,

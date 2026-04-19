@@ -19,6 +19,12 @@
     "pacifist": 2000.0,
     "collaborator": 500.0,
     "facilitator": -5000.0,
-    "caa": -2000.0
+    "caa": -2000.0,
+    "skeptic_residual": 2000.0,
+    "contrarian_residual": 2000.0,
+    "collaborator_residual": 5000.0
+  },
+  "provenance": {
+    "residual_conditions": "skeptic_residual, contrarian_residual, collaborator_residual locked from single-seed (42) tune run in best_coefs_tune.json. The other 11 conditions are the 5-seed mode-across-seeds aggregate. Residuals were added to the pipeline post-hoc after the multi-seed tune had completed."
   }
 }
