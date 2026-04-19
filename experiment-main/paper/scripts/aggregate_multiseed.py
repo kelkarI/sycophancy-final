@@ -66,15 +66,21 @@ def main():
                     "wilcoxon_p_adj": [], "wilcoxon_significant": []}
                 for c in CONDITIONS_REAL}
 
-    missing = 0
+    # Only count seeds that actually have data for THIS split toward the
+    # top-level `seeds` / `n_seeds` fields. A seed directory that has only
+    # tune data should not appear as one of the test-split contributing
+    # seeds (and vice-versa); it should appear in `missing_seeds` instead.
+    contributing_seeds = []
+    missing_seeds = []
     for s in seeds:
         rates_path = f"{res_dir}/seed_{s}/sycophancy_rates{suffix}.json"
         tests_path = f"{res_dir}/seed_{s}/statistical_tests{suffix}.json"
         bc_path    = f"{res_dir}/seed_{s}/best_coefs{suffix}.json"
         if not (os.path.exists(rates_path) and os.path.exists(tests_path)):
             print(f"  WARN: seed {s}: missing rates/tests JSONs (split={args.split})")
-            missing += 1
+            missing_seeds.append(s)
             continue
+        contributing_seeds.append(s)
         with open(rates_path) as f:
             rates = json.load(f)
         with open(tests_path) as f:
@@ -100,8 +106,13 @@ def main():
             per_cond[cond]["wilcoxon_p_adj"].append(float(w.get("p_value_adjusted", 1.0)))
             per_cond[cond]["wilcoxon_significant"].append(bool(w.get("significant_after_mcc")))
 
-    out = {"split": args.split, "seeds": seeds, "n_seeds": len(seeds),
-           "per_condition": {}, "missing_seeds": missing}
+    # Top-level seeds / n_seeds report only split-contributing seeds.
+    out = {"split": args.split,
+           "seeds": contributing_seeds,
+           "n_seeds": len(contributing_seeds),
+           "per_condition": {},
+           "missing_seeds": missing_seeds,
+           "n_missing_seeds": len(missing_seeds)}
     for cond, d in per_cond.items():
         if not d["logits"]:
             continue
@@ -152,7 +163,7 @@ def main():
         with open(consensus_path, "w") as f:
             json.dump({
                 "source_split": "tune",
-                "seeds": seeds,
+                "seeds": contributing_seeds,
                 "rule": "mode across seeds, tie-break by count then proximity to median",
                 "best_coefs": consensus,
             }, f, indent=2)
